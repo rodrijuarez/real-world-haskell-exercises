@@ -30,3 +30,26 @@ safeInit :: [a] -> Maybe [a]
 safeInit a = if not (null a)
   then Just (init a)
   else Nothing
+
+
+splitWith :: (a -> Bool) -> [a] -> [[a]]
+splitWith cond [] = []
+splitWith cond a = case prefix of
+          []   -> meat
+          xs   -> [xs] ++ meat
+  where
+    (prefix, suffix) = break cond a
+    rest = case suffix of
+      []    -> []
+      x:xs  -> dropWhile cond xs
+    meat = splitWith cond rest
+
+--,c
+-- isOdd [1,2,3,4] -> [[1], [2,3], [4]]
+-- [1, 2, 3, 4] 
+-- [1]
+-- [1] [2, 3] [4]
+--
+-- foldl --> 
+--  (acc, a) -> 
+--    if (cond(a)) then concatToLastOne else pushNewElementIntoArray
