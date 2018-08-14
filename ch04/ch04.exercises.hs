@@ -30,3 +30,24 @@ myGroupBy cond xs =
              else [x] : [y : yGroup] ++ rest)
     []
     xs
+
+myAny :: (a -> Bool) -> [a] -> Bool
+myAny cond xs = foldr f False xs
+  where
+    f x a =
+      if cond (x)
+        then True
+        else a
+
+myCycle :: [a] -> [a]
+myCycle xs = xs'
+  where
+    xs' = xs ++ xs'
+
+myWords :: String -> [String]
+myWords xs = foldr f [""] xs
+  where
+    f x [""] = [[x]]
+    f x (('\n':group):rest) = [x] : group : rest
+    f x ((' ':group):rest) = [x] : group : rest
+    f x (group:rest) = [x : group] ++ rest
