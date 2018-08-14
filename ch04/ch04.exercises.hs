@@ -51,3 +51,7 @@ myWords xs = foldr f [""] xs
     f x (('\n':group):rest) = [x] : group : rest
     f x ((' ':group):rest) = [x] : group : rest
     f x (group:rest) = [x : group] ++ rest
+
+myUnlines :: [String] -> String
+myUnlines xs = foldl (\acc x -> acc ++ x ++ ['\n']) "" xs
+  where
