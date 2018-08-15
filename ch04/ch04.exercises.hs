@@ -55,3 +55,8 @@ myWords xs = foldr f [""] xs
 myUnlines :: [String] -> String
 myUnlines xs = foldl (\acc x -> acc ++ x ++ ['\n']) "" xs
   where
+
+
+myTail :: [a] -> [a]
+myTail [] = []
+myTail (_:rest) = rest

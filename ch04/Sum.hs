@@ -4,4 +4,9 @@ mySum xs = helper 0 xs
     helper acc _ = acc
 
 mySumTwo :: [Int] -> Int
-mySumTwo xs = foldl (+) 0 xs
+mySumTwo = foldl (+) 0
+
+mySumS :: Int -> a -> a -> a
+mySumS a b = a + c'
+  where
+    c' = b + c'
