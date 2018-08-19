@@ -1,0 +1,2 @@
+I like Haskell
+Haskell is great
