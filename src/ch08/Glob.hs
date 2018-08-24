@@ -17,10 +17,7 @@ isPattern = any (`elem` "[*?")
 namesMatching pat
   | not (isPattern pat) = do
     exists <- doesNameExist pat
-    return
-      (if exists
-         then [pat]
-         else [])
+    return $ if' exists [pat] []
   | otherwise = do
     case splitFileName pat of
       ("", baseName) -> do
@@ -44,9 +41,7 @@ namesMatching pat
 doesNameExist :: FilePath -> IO Bool
 doesNameExist name = do
   fileExists <- doesFileExist name
-  if fileExists
-    then return True
-    else doesDirectoryExist name
+  if' fileExists (return True) (doesDirectoryExist name)
 
 listPlain :: FilePath -> String -> IO [String]
 listPlain dirName baseName = do
@@ -59,19 +54,26 @@ listPlain dirName baseName = do
        then [baseName]
        else [])
 
+(|>) :: a -> (a -> b) -> b
+(|>) x f = f x
+
+if' :: Bool -> a -> a -> a
+if' True x _ = x
+if' False _ y = y
+
 listMatches :: FilePath -> String -> IO [String]
-listMatches dirName pat = do
-  dirName' <-
-    if null dirName
-      then getCurrentDirectory
-      else return dirName
+listMatches dirName pattern = do
+  dirName' <- if' (null dirName) getCurrentDirectory (return dirName)
   handle ((const (return [])) :: IOError -> IO [String]) $ do
     names <- getDirectoryContents dirName'
-    let names' =
-          if isHidden pat
-            then filter isHidden names
-            else filter (not . isHidden) names
-    return (filter (`matchesGlob` pat) names')
+    filterHidden (isHidden pattern) names |> (filter (`matchesGlob` pattern)) |>
+      return
+
+filterHidden :: Bool -> [String] -> [String]
+filterHidden showHidden names =
+  if showHidden
+    then filter isHidden names
+    else filter (not . isHidden) names
 
 isHidden ('.':_) = True
 isHidden _ = False
