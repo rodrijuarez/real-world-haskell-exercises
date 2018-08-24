@@ -2,7 +2,7 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: cfd9ef25096cf609e4b8c6f0fd978ff9fc881aab141302ecb9469854087ba3f3
+-- hash: 1211837b7911a4af43c6073a671cb43800f00b6767013a8d71d752a676d2068f
 
 name:           real-world-haskell
 version:        0.1.0.0
@@ -33,6 +33,8 @@ library
       src
   build-depends:
       base >=4.7 && <5
+    , directory <=1.3.3
+    , filepath <=1.4.2
     , regex-posix >=0.9.0
   default-language: Haskell2010
 
@@ -45,6 +47,8 @@ executable real-world-haskell-exe
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , directory <=1.3.3
+    , filepath <=1.4.2
     , real-world-haskell
     , regex-posix >=0.9.0
   default-language: Haskell2010
@@ -59,6 +63,8 @@ test-suite real-world-haskell-test
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , directory <=1.3.3
+    , filepath <=1.4.2
     , real-world-haskell
     , regex-posix >=0.9.0
   default-language: Haskell2010
