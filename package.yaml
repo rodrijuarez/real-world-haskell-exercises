@@ -24,6 +24,7 @@ dependencies:
 - regex-posix >= 0.9.0
 - directory <= 1.3.3
 - filepath <= 1.4.2
+- time >=1.0
 
 library:
   source-dirs: src
