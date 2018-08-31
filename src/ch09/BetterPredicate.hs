@@ -2,6 +2,7 @@ module BetterPredicate where
 
 import Control.Exception (bracket, handle)
 import Control.Monad (filterM)
+import ControlledVisit (Info)
 import Data.Time (UTCTime)
 import System.Directory
        (Permissions(..), getModificationTime, getPermissions)
